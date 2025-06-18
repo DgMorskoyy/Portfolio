@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Douglas Marinho</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="img/logo.png" alt="Logo" class="logo"/>
+      <span class="nome">Douglas Marinho</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <li><button onclick="toggleLang()">EN</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 id="hero-title">Douglas Marinho</h1>
+      <p id="hero-sub">Design de produto com propósito</p>
+    </section>
+
+    <section id="projetos" class="projetos">
+      <h2>Projetos</h2>
+      <div class="projetos-grid">
+        <div class="projeto" onclick="abrirModal(1)">
+          <img src="img/projeto1.jpg" alt="Projeto 1"/>
+          <h3>Disco Lamp</h3>
+        </div>
+        <div class="projeto" onclick="abrirModal(2)">
+          <img src="img/projeto2.jpg" alt="Projeto 2"/>
+          <h3>Disko 2</h3>
+        </div>
+        <div class="projeto" onclick="abrirModal(3)">
+          <img src="img/projeto3.jpg" alt="Projeto 3"/>
+          <h3>Disco na Mesa</h3>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre</h2>
+      <p>Designer de produto focado em formas orgânicas, iluminação e design autoral.</p>
+    </section>
+
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Entre em contato pelo email: douglas@email.com</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Douglas Marinho</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <span class="close" onclick="fecharModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="Imagem do Projeto">
+    </div>
+  </div>
+
+  <script>
+    const textos = {
+      pt: {
+        "hero-title": "Douglas Marinho",
+        "hero-sub": "Design de produto com propósito"
+      },
+      en: {
+        "hero-title": "Douglas Marinho",
+        "hero-sub": "Product design with purpose"
+      }
+    };
+
+    let idioma = "pt";
+    function toggleLang() {
+      idioma = idioma === "pt" ? "en" : "pt";
+      document.getElementById("hero-title").innerText = textos[idioma]["hero-title"];
+      document.getElementById("hero-sub").innerText = textos[idioma]["hero-sub"];
+    }
+
+    const imagens = {
+      1: ["img/projeto1.jpg"],
+      2: ["img/projeto2.jpg"],
+      3: ["img/projeto3.jpg"]
+    };
+
+    let imgIndex = 0, imgLoop = [], loopInterval;
+
+    function abrirModal(id) {
+      imgLoop = imagens[id];
+      imgIndex = 0;
+      document.getElementById("modal-img").src = imgLoop[imgIndex];
+      document.getElementById("modal").style.display = "flex";
+
+      loopInterval = setInterval(() => {
+        imgIndex = (imgIndex + 1) % imgLoop.length;
+        const img = document.getElementById("modal-img");
+        img.classList.remove("fade");
+        void img.offsetWidth; // reflow
+        img.src = imgLoop[imgIndex];
+        img.classList.add("fade");
+      }, 3000);
+    }
+
+    function fecharModal() {
+      clearInterval(loopInterval);
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
